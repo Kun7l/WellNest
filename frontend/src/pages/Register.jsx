@@ -17,9 +17,10 @@ const Register = () => {
 
   // to handel register
   const handleRegister = async (e) => {
+
     e.preventDefault();
-    alert("rec")
-    try {
+    
+   try{
       const response = await axios.post(
         "http://localhost:3000/user/register",
         {
@@ -35,10 +36,17 @@ const Register = () => {
         },
         { withCredentials: true }
       );
-    } catch (error) {
-      throw error;
+
+      if(response.status == 201){
+        localStorage.setItem("token" ,response.data.token);
+        navigate("/");
+      }
+   }
+   catch(error){
+    throw error;
+   }
+      
     }
-  };
 
   // to go to next page of register
   const handleNext = (e) => {

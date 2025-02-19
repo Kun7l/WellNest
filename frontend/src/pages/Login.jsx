@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -9,11 +10,18 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (res == 200) {
-      navigate("/");
-    } else {
-      alert("error");
+
+    try{
+      const response = await axios.post("http://localhost:3000/user/login" , {email : email , password : password} , {withCredentials : true});
+      if(response.status == 200){
+        localStorage.setItem("token" , response.data.token);
+        navigate("/");
+      }
     }
+    catch(error){
+      throw error;
+    }
+
   };
 
   const toggleForm = () => {
