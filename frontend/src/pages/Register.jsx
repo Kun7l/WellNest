@@ -3,6 +3,7 @@ import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import {Loader2} from "lucide-react";
 
 
 const Register = () => {
@@ -18,12 +19,15 @@ const Register = () => {
   const [mobileNumberErrorMessage, setmobileNumberErrorMessage] = useState("");
   const notify = (message) => toast(message);
 
+  const [loading , setLoading] = useState(false);
+
   // to handel register
   const handleRegister = async (e) => {
 
     e.preventDefault();
     
    try{
+    setLoading(true);
       const response = await axios.post(
         "http://localhost:3000/user/register",
         {
@@ -48,6 +52,10 @@ const Register = () => {
    }
    catch(error){
     notify(error?.response?.data?.message);
+   }
+
+   finally{
+    setLoading(false);
    }
       
     }
@@ -190,9 +198,19 @@ const Register = () => {
           </div>
           <br />
           <div className="formGroup">
-            <button type="submit" className={"button"}>
-              Create account
-            </button>
+            {
+              loading ? 
+              (
+                <button className={"button"}>
+                  <Loader2/>Please wait
+                </button>
+              ) : 
+              (
+                <button type="submit" className={"button"}>
+                  Create account
+                </button>
+              )
+            }
           </div>
         </form>
       )}

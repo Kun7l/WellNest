@@ -3,12 +3,14 @@ import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import {Loader2} from "lucide-react"
 
 
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading , setLoading] = useState(false);
 
   const notify = (message) => toast(message);
 
@@ -16,6 +18,7 @@ const Login = () => {
     e.preventDefault();
 
     try{
+      setLoading(true);
       const response = await axios.post("http://localhost:3000/user/login" , {email : email , password : password} , {withCredentials : true});
       if(response.status == 200){
         localStorage.setItem("token" , response.data.token);
@@ -26,7 +29,9 @@ const Login = () => {
     catch(error){
       notify(error?.response?.data?.message);
     }
-
+    finally{
+      setLoading(false);
+    }
   };
 
   const toggleForm = () => {
@@ -62,9 +67,19 @@ const Login = () => {
         <br />
         
         <div className="formGroup">
-          <button type="submit" className={"button"}>
-            Login
-          </button>
+          {
+            loading ? 
+            (
+              <button className={"button"}>
+                <Loader2 class = "animate-spin"/> Please Wait
+              </button>
+            ) : 
+            (
+              <button type="submit" className={"button"}>
+                Login
+              </button>
+            )
+          }
         </div>
 
         <div className="formGroup">
