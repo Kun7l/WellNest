@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -15,21 +16,28 @@ const Register = () => {
   const [mobileNumberErrorMessage, setmobileNumberErrorMessage] = useState("");
 
   // to handel register
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-
-    const data = {
-      name: name,
-      email: email,
-      mobile_number: mobileNumber,
-      password: password,
-      dob: dob,
-      height: height,
-      weight: weight,
-      age: getAge(dob),
-      bmi: ((weight / height ** 2) * 10000).toFixed(2),
-    };
-    alert(data.bmi);
+    alert("rec")
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/register",
+        {
+          name: name,
+          email: email,
+          mobile_number: mobileNumber,
+          password: password,
+          dob: dob,
+          height: height,
+          weight: weight,
+          age: getAge(dob),
+          bmi: ((weight / height ** 2) * 10000).toFixed(2),
+        },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      throw error;
+    }
   };
 
   // to go to next page of register

@@ -1,22 +1,34 @@
-const userRegister = (req,res) =>{
-    const {name , email , password , mobile_number , weight , height , age , dob} = req.body;
-    res.send("hello");
-}
+const userRegister = (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    mobile_number,
+    weight,
+    height,
+    age,
+    dob,
+    bmi,
+  } = req.body;
+  console.log("request recieved");
 
-const userLogin = (req,res) =>{
-    res.send("Login");
-}
+  res.send("hello");
+};
 
-const userProfile = (req,res) =>{
-    res.send("user Profile");
-}
+const userLogin = (req, res) => {
+  res.send("Login");
+};
 
-const userProfileUpdate = (req , res) =>{
-    res.send("user Profile Update");
-}
+const userProfile = (req, res) => {
+  res.send("user Profile");
+};
 
-const userLogOut = (req,res)=>{
-    res.send("user LogOut");
-}
+const userProfileUpdate = (req, res) => {
+  res.send("user Profile Update");
+};
 
-export {userRegister , userLogin , userProfile , userProfileUpdate , userLogOut};
+const userLogOut = (req, res) => {
+  res.send("user LogOut");
+};
+
+export { userRegister, userLogin, userProfile, userProfileUpdate, userLogOut };
