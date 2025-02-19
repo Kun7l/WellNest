@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import ProtectedRoute from "../pages/ProtectedRoute.jsx"
 import Home from "../pages/Home";
 
 export default function AppRoutes() {
