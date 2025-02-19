@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import {Loader2} from "lucide-react";
+import {useDispatch} from "react-redux";
+import {setUser} from "../redux/user.slice.js";
+
 
 const Register = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNumber, setmobileNumber] = useState();
@@ -14,13 +20,17 @@ const Register = () => {
   const [weight, setweight] = useState(50);
   const [next, setnext] = useState(true);
   const [mobileNumberErrorMessage, setmobileNumberErrorMessage] = useState("");
+  const notify = (message) => toast(message);
 
-  // to handel register
+  const [loading , setLoading] = useState(false);
+
+  // to handle register
   const handleRegister = async (e) => {
 
     e.preventDefault();
     
    try{
+    setLoading(true);
       const response = await axios.post(
         "http://localhost:3000/user/register",
         {
@@ -39,11 +49,17 @@ const Register = () => {
 
       if(response.status == 201){
         localStorage.setItem("token" ,response.data.token);
+        dispatch(setUser(response.data.user));
+        notify(response?.data?.message);
         navigate("/");
       }
    }
    catch(error){
-    throw error;
+    notify(error?.response?.data?.message);
+   }
+
+   finally{
+    setLoading(false);
    }
       
     }
@@ -186,9 +202,19 @@ const Register = () => {
           </div>
           <br />
           <div className="formGroup">
-            <button type="submit" className={"button"}>
-              Create account
-            </button>
+            {
+              loading ? 
+              (
+                <button className={"button"}>
+                  <Loader2/>Please wait
+                </button>
+              ) : 
+              (
+                <button type="submit" className={"button"}>
+                  Create account
+                </button>
+              )
+            }
           </div>
         </form>
       )}
