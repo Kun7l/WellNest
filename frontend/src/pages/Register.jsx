@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const Register = () => {
   let navigate = useNavigate();
@@ -14,6 +16,7 @@ const Register = () => {
   const [weight, setweight] = useState(50);
   const [next, setnext] = useState(true);
   const [mobileNumberErrorMessage, setmobileNumberErrorMessage] = useState("");
+  const notify = (message) => toast(message);
 
   // to handel register
   const handleRegister = async (e) => {
@@ -39,11 +42,12 @@ const Register = () => {
 
       if(response.status == 201){
         localStorage.setItem("token" ,response.data.token);
+        notify(response?.data?.message);
         navigate("/");
       }
    }
    catch(error){
-    throw error;
+    notify(error?.response?.data?.message);
    }
       
     }

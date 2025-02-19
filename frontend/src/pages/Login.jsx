@@ -2,11 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import "../pages/css/register.css";
 import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const notify = (message) => toast(message);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,11 +19,12 @@ const Login = () => {
       const response = await axios.post("http://localhost:3000/user/login" , {email : email , password : password} , {withCredentials : true});
       if(response.status == 200){
         localStorage.setItem("token" , response.data.token);
+        notify(response.data.message);
         navigate("/");
       }
     }
     catch(error){
-      throw error;
+      notify(error?.response?.data?.message);
     }
 
   };
