@@ -4,10 +4,13 @@ import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {Loader2} from "lucide-react";
+import {useDispatch} from "react-redux";
+import {setUser} from "../redux/user.slice.js";
 
 
 const Register = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobileNumber, setmobileNumber] = useState();
@@ -21,7 +24,7 @@ const Register = () => {
 
   const [loading , setLoading] = useState(false);
 
-  // to handel register
+  // to handle register
   const handleRegister = async (e) => {
 
     e.preventDefault();
@@ -46,6 +49,7 @@ const Register = () => {
 
       if(response.status == 201){
         localStorage.setItem("token" ,response.data.token);
+        dispatch(setUser(response.data.user));
         notify(response?.data?.message);
         navigate("/");
       }

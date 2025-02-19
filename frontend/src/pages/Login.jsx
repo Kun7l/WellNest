@@ -4,10 +4,12 @@ import { Navigate, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {Loader2} from "lucide-react"
-
+import {useDispatch} from "react-redux";
+import {setUser} from "../redux/user.slice.js";
 
 const Login = () => {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading , setLoading] = useState(false);
@@ -22,6 +24,7 @@ const Login = () => {
       const response = await axios.post("http://localhost:3000/user/login" , {email : email , password : password} , {withCredentials : true});
       if(response.status == 200){
         localStorage.setItem("token" , response.data.token);
+        dispatch(setUser(response.data.user));
         notify(response.data.message);
         navigate("/");
       }
