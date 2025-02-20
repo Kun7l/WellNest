@@ -15,7 +15,7 @@ const Login = () => {
   const [loading , setLoading] = useState(false);
 
   const notify = (message) => toast(message);
-
+ 
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -74,7 +74,7 @@ const Login = () => {
             loading ? 
             (
               <button className={"button"}>
-                <Loader2 class = "animate-spin"/> Please Wait
+                <Loader2 className = "animate-spin"/> Please Wait
               </button>
             ) : 
             (

@@ -1,6 +1,5 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
@@ -9,7 +8,7 @@ export default function BasicCard(props) {
     <Card sx={{ width: props.width, textAlign: "left" }}>
       <CardContent>
         <Typography
-          variant="h5"
+          variant="p"
           gutterBottom
           sx={{ color: "text.secondary", fontSize: 14 }}
         >
@@ -19,11 +18,11 @@ export default function BasicCard(props) {
         <Typography variant="body2">
           weight
           <Typography
-            variant="h5"
+            variant="p"
             gutterBottom
             sx={{ color: "text.secondary", fontSize: 14 }}
           >
-           {56+' '} kg
+            {" "+props.impParameters+ " kg"}
           </Typography>
         </Typography>
       </CardContent>

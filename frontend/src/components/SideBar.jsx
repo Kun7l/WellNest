@@ -18,10 +18,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
+
+
 const drawerWidth = 240;
 
-function SideBar(props) {
-  const [userMessage, setuserMessage] = useState("Hello, Krunal");
+function SideBar(props) {  
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -93,7 +94,7 @@ function SideBar(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            {userMessage}
+            {"Hello "+props.name}
           </Typography>
         </Toolbar>
       </AppBar>
